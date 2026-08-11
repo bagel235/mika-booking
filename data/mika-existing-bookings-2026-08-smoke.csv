@@ -1,0 +1,4 @@
+customer_name,contact,booking_date,start_time,duration_hours,booking_type,companion_count,camera_requested,standard_price,price_adjustment,final_price,deposit_paid,status,notes
+08/20 14:00-15:00,08/20 14:00-15:00,2026-08-20,14:00,1,SINGLE,1,FALSE,108,0,108,54,CONFIRMED,原表：定金54
+08/24 16:00-17:00,08/24 16:00-17:00,2026-08-24,16:00,1,DOUBLE,0,FALSE,135,0,135,67.5,CONFIRMED,原表：定金67.5
+08/31 19:00-20:00,08/31 19:00-20:00,2026-08-31,19:00,1,DOUBLE,0,FALSE,135,0,135,67.5,CONFIRMED,原表：已收定金67.5，到店67.5

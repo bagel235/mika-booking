@@ -1,0 +1,17 @@
+begin;
+select plan(14);
+select is((select standard_price from calculate_price('2026-08-10','SINGLE',1,0)),78::numeric,'weekday single 1h');
+select is((select standard_price from calculate_price('2026-08-10','SINGLE',2,0)),135::numeric,'weekday single 2h');
+select is((select standard_price from calculate_price('2026-08-10','SINGLE',3,0)),202.5::numeric,'weekday single 3h');
+select is((select standard_price from calculate_price('2026-08-10','SINGLE',4,0)),270::numeric,'weekday single 4h');
+select is((select standard_price from calculate_price('2026-08-10','DOUBLE',3,0)),390::numeric,'weekday double 3h');
+select is((select standard_price from calculate_price('2026-08-10','DOUBLE',4,0)),520::numeric,'weekday double 4h');
+select is((select standard_price from calculate_price('2026-08-14','SINGLE',3,0)),225::numeric,'peak single 3h');
+select is((select standard_price from calculate_price('2026-08-14','SINGLE',4,0)),300::numeric,'peak single 4h');
+select is((select standard_price from calculate_price('2026-08-14','DOUBLE',3,0)),420::numeric,'peak double 3h');
+select is((select standard_price from calculate_price('2026-08-14','DOUBLE',4,0)),560::numeric,'peak double 4h');
+select is((select standard_price from calculate_price('2026-08-10','PRIVATE',3,0)),897::numeric,'weekday private 3h');
+select is((select standard_price from calculate_price('2026-08-14','PRIVATE',4,0)),1400::numeric,'peak private 4h');
+select is((select standard_price from calculate_price('2026-08-10','SINGLE',3,2)),262.5::numeric,'weekday single companions');
+select is((select standard_price from calculate_price('2026-08-14','DOUBLE',4,3)),680::numeric,'peak double companions');
+select * from finish();rollback;

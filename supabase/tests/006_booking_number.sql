@@ -1,0 +1,10 @@
+begin;
+select plan(6);
+select is(next_booking_number('2034-02-01'),'MIKA-20340201-001','first number for date');
+select is(next_booking_number('2034-02-01'),'MIKA-20340201-002','second number for same date');
+select is(next_booking_number('2034-02-02'),'MIKA-20340202-001','new date restarts at 001');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','编号测试','ref-1','2034-02-03','09:00',1,'SINGLE',0)$$,'customer booking uses authoritative allocator');
+select is((select booking_number from bookings where contact='ref-1'),'MIKA-20340203-001','booking stores formatted reference');
+select throws_ok($$update bookings set booking_number='MIKA-20340203-999' where contact='ref-1'$$,'23514','BOOKING_NUMBER_IMMUTABLE','booking number is immutable');
+select * from finish();
+rollback;

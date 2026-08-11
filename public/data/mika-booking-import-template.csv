@@ -1,0 +1,2 @@
+customer_name,contact,booking_date,start_time,duration_hours,booking_type,companion_count,camera_requested,standard_price,price_adjustment,final_price,deposit_paid,status,notes
+示例客户,13800000000,2026-08-18,15:00,2,TRIPLE,1,false,420,0,420,210,CONFIRMED,预约类型可填 SINGLE、DOUBLE、TRIPLE 或 PRIVATE

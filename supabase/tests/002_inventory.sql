@@ -1,0 +1,12 @@
+begin;select plan(8);
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','A','1','2030-08-12','09:00',2,'SINGLE',3)$$,'first normal succeeds');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','B','2','2030-08-12','09:00',2,'DOUBLE',0)$$,'second normal succeeds');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','C','3','2030-08-12','09:00',1,'SINGLE',0)$$,'P0001','SLOT_UNAVAILABLE','third normal fails');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','D','4','2030-08-12','10:00',1,'PRIVATE',0)$$,'P0001','SLOT_UNAVAILABLE','normal blocks private');
+update bookings set hold_expires_at=clock_timestamp()-interval '1 minute' where customer_name='A';
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','E','5','2030-08-12','09:00',1,'SINGLE',0)$$,'expired hold releases capacity');
+update bookings set status='CANCELLED' where customer_name='B';
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','F','6','2030-08-12','10:00',1,'SINGLE',0)$$,'cancelled releases capacity');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','P','7','2030-08-13','19:00',5,'PRIVATE',0)$$,'private ending 24 succeeds');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','X','8','2030-08-13','20:00',5,'PRIVATE',0)$$,'22023','INVALID_BUSINESS_HOURS','ending after 24 fails');
+select * from finish();rollback;

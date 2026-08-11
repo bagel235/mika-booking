@@ -1,0 +1,5 @@
+customer_name,contact,booking_date,start_time,duration_hours,booking_type,companion_count,camera_requested,standard_price,price_adjustment,final_price,deposit_paid,status,notes,review_reason
+08/12 15:00-16:00-A,08/12 15:00-16:00-A,2026-08-12,15:00,2,DOUBLE,0,FALSE,135,0,135,67.5,CONFIRMED,原表存在 15:00-16:00 但时长 2H,开始结束时间与 duration 冲突
+08/12 15:00-16:00-B,08/12 15:00-16:00-B,2026-08-12,15:00,2,DOUBLE,0,FALSE,260,0,260,130,CONFIRMED,原表存在 15:00-16:00 但时长 2H,开始结束时间与 duration 冲突
+08/13 15:00-17:00,08/13 15:00-17:00,2026-08-13,15:00,2,DOUBLE,0,FALSE,320,0,320,160,CONFIRMED,与同日其他记录叠加后疑似形成第三组普通重叠，需人工确认
+08/15 14:00-15:00,08/15 14:00-15:00,2026-08-15,14:00,2,SINGLE,0,FALSE,190,0,190,95,CONFIRMED,开始结束时间与 duration 2H 冲突

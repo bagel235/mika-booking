@@ -1,0 +1,1 @@
+import {AdminShell}from"@/components/admin-shell";import{AdminAuthGate}from"@/components/admin-auth-gate";export default function Layout({children}:{children:React.ReactNode}){return <AdminAuthGate><AdminShell>{children}</AdminShell></AdminAuthGate>}

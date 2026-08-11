@@ -1,0 +1,15 @@
+begin;
+select plan(10);
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',1,0)),202.5::numeric,'weekday triple 1h');
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',2,0)),390::numeric,'weekday triple 2h');
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',3,0)),585::numeric,'weekday triple 3h');
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',4,0)),780::numeric,'weekday triple 4h');
+select is((select standard_price from calculate_price('2026-08-14','TRIPLE',1,0)),225::numeric,'peak triple 1h');
+select is((select standard_price from calculate_price('2026-08-14','TRIPLE',2,0)),420::numeric,'peak triple 2h');
+select is((select standard_price from calculate_price('2026-08-14','TRIPLE',3,0)),630::numeric,'peak triple 3h');
+select is((select standard_price from calculate_price('2026-08-14','TRIPLE',4,0)),840::numeric,'peak triple 4h');
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',2,2)),450::numeric,'weekday triple 2h plus companions');
+update pricing_rules set two_hours=300 where day_category='WEEKDAY' and booking_type='DOUBLE';
+select is((select standard_price from calculate_price('2026-08-10','TRIPLE',2,0)),450::numeric,'triple dynamically follows changed double price');
+select * from finish();
+rollback;

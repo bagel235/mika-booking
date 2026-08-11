@@ -1,0 +1,16 @@
+begin;
+select plan(12);
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','T1','t1','2033-01-10','10:00',1,'TRIPLE',3)$$,'triple is one normal group');
+select is((select normal_groups from public_slot_occupancy('2033-01-10','2033-01-10') where slot_start='10:00'),1,'one triple displays 1/2');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','S1','s1','2033-01-10','10:00',1,'SINGLE',0)$$,'triple plus single succeeds');
+select is((select normal_groups from public_slot_occupancy('2033-01-10','2033-01-10') where slot_start='10:00'),2,'triple plus single displays 2/2');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','D1','d1','2033-01-10','10:00',1,'DOUBLE',0)$$,'P0001','SLOT_UNAVAILABLE','third normal booking fails');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','T2','t2','2033-01-11','11:00',1,'TRIPLE',0)$$,'triple for double pairing succeeds');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','D2','d2','2033-01-11','11:00',1,'DOUBLE',0)$$,'triple plus double succeeds');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','T3','t3','2033-01-12','12:00',1,'TRIPLE',0)$$,'first triple succeeds');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','T4','t4','2033-01-12','12:00',1,'TRIPLE',0)$$,'two triples succeed');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','P1','p1','2033-01-12','12:00',1,'PRIVATE',0)$$,'P0001','SLOT_UNAVAILABLE','private overlapping triple fails');
+select lives_ok($$select * from create_booking_hold('CUSTOMER_WEB','P2','p2','2033-01-13','13:00',1,'PRIVATE',0)$$,'private seed succeeds');
+select throws_ok($$select * from create_booking_hold('CUSTOMER_WEB','T5','t5','2033-01-13','13:00',1,'TRIPLE',0)$$,'P0001','SLOT_UNAVAILABLE','triple overlapping private fails');
+select * from finish();
+rollback;
